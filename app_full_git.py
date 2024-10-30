@@ -3128,7 +3128,7 @@ if check_password():
             # df_reshaped = pd.read_csv('us-population-2010-2019-reshaped.csv')
             # Load the Stata file (replace with your file path)
             def load_data():
-                url = "https://www.dropbox.com/scl/fi/zg800oimiisqr2pvb22ym/food_arm.dta?rlkey=xumvwye8ghyk416xtm2vxjxmz&st=twi9uik2&dl=1"  # Replace with your actual link
+                url = "https://www.dropbox.com/scl/fi/g3kasbxsoc0qwlx31tru9/food_arm.dta?rlkey=4mfa0qf1sw0tnfd49c2ggvvm4&st=wx49kh0c&dl=1"  # Replace with your actual link
                 try:
          # Step 1: Download the .dta file
                     response = requests.get(url)
@@ -3303,7 +3303,7 @@ if check_password():
             # df_reshaped = pd.read_csv('us-population-2010-2019-reshaped.csv')
             # Load the Stata file (replace with your file path)
             def load_data():
-                url = "https://www.dropbox.com/scl/fi/aoixdip38kum4795huknh/nonfood_arm.dta?rlkey=eaylfouwkfj1i0kehuyyoswvz&st=25klen4i&dl=1"  # Replace with your actual link
+                url = "https://www.dropbox.com/scl/fi/qltaucdatbyiwj2t1g0w5/nonfood_arm.dta?rlkey=gg6v28zi19fwkygh5gfmztq60&st=37mocb28&dl=1"  # Replace with your actual link
                 try:
          # Step 1: Download the .dta file
                     response = requests.get(url)
