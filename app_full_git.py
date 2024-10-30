@@ -374,16 +374,14 @@ if check_password():
 
             # Format each time column to the 'CCYY/NN/DD_HH' format
             with st.sidebar:
-                st.title('Data Filter')
+                st.title('Roster Filter')
 
                 # Convert date columns to datetime if not already done
                 df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
                 df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
 
                 # Date filter (single date or range)
-               # start_date_filter = st.date_input("Start Date", pd.to_datetime(df0['start_date'].min()))
-               # end_date_filter = st.date_input("End Date", pd.to_datetime(df0['end_date'].max()))
-
+ 
                 # Filter by icode, psu, region, urban
                 selected_agree = st.multiselect("Filter by Agreement", df0['agreement'].unique())
                 selected_region = st.multiselect("Filter by Region", df0['region'].unique())
@@ -392,22 +390,12 @@ if check_password():
                 selected_icode = st.multiselect("Filter by Enumerator", df0['icode'].unique())
                 selected_gender = st.multiselect("Filter by Gender", df0['gender'].unique())
                 # Apply date filters
-                #filtered_data = df0[
-                 #   (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                 #   (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                #]
+               
                 filtered_data = df0.copy()
-
-                # Apply filters for other selections if any
-              #  if selected_agree:
-               #     filtered_data = filtered_data[filtered_data['agreement'].isin(selected_agree)]
 
                 if selected_icode:
                     filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-               # if selected_psu:
-                #    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
+
                 if selected_region:
                     filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
                 
@@ -544,38 +532,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
+                st.title('Migration Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_m = st.multiselect("Filter by Region", df0['region'].unique(), key="region_filter")
+                selected_urban_m = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="urban_filter")
+                selected_icode_m = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="icode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_m:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_m)]
+            
+                if selected_urban_m:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_m)]
+            
+                if selected_icode_m:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_m)]
+            
 
             # Filters
             st.subheader("Data Tables")
@@ -670,37 +646,27 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Education Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="edregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="edurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="edicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
+ 
 
 
             # Filters
@@ -795,39 +761,29 @@ if check_password():
 
 
             #######################
-            # Sidebar
+             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('ICT Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="ictregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="icturban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="icticode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
+ 
 
 
             # Filters
@@ -920,40 +876,28 @@ if check_password():
 
 
             #######################
-            # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
+                st.title('Employment Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="empregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="empurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="empicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
+ 
 
             # Filters
             st.subheader("Data Tables")
@@ -1046,41 +990,27 @@ if check_password():
 
 
             #######################
-            # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
-
+                st.title('Social Benefits Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="socregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="socurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="socicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
             # Filters
             st.subheader("Data Tables")
             selected_vars = st.multiselect("Select variables to view", filtered_data.columns)
@@ -1173,39 +1103,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
-
+                st.title('Non-Wage Income Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="nwregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="nwurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="nwicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
             # Filters
             st.subheader("Data Tables")
             selected_vars = st.multiselect("Select variables to view", filtered_data.columns)
@@ -1323,39 +1240,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
-
+                st.title('Food Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="foodregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="foodurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="foodicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
             # Filters
             st.subheader("Data Tables")
             selected_vars = st.multiselect("Select variables to view", filtered_data.columns)
@@ -1507,39 +1411,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
-
+                st.title('Non-Food Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="nfregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="nfurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="nficode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
             # Filters
             st.subheader("Data Tables")
             selected_vars = st.multiselect("Select variables to view", filtered_data.columns)
@@ -1632,37 +1523,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Dwelling Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="dwregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="dwurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="dwicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+             
 
 
             # Filters
@@ -1757,39 +1637,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
-
+                st.title('Durables Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="drregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="drurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="dricode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
             # Filters
             st.subheader("Data Tables")
             selected_vars = st.multiselect("Select variables to view", filtered_data.columns)
@@ -1883,38 +1750,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
+                st.title('Agriculture Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="agregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="agurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="agicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
             # Filters
             st.subheader("Data Tables")
@@ -2008,38 +1863,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
+                st.title('Perception Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="prregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="prurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="pricode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
             # Filters
             st.subheader("Data Tables")
@@ -2452,7 +2295,7 @@ if check_password():
 
             # Format each time column to the 'CCYY/NN/DD_HH' format
             with st.sidebar:
-                st.title('Data Filter')
+                st.title('Roster Filter')
 
                 # Convert date columns to datetime if not already done
                 df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
@@ -2623,37 +2466,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Migration Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="mgregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="mgurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="mgicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
 
             # Filters
@@ -2749,37 +2581,27 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Education Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="edregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="edurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="edicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
+                   
 
 
             # Filters
@@ -2875,37 +2697,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('ICT Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="ictregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="icturban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="icticode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
 
             # Filters
@@ -3000,37 +2811,27 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Employment Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="empregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="empurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="empicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
+                  
 
 
             # Filters
@@ -3126,37 +2927,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Social Benefits Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="scregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="scurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="scicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
 
             # Filters
@@ -3251,37 +3041,27 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
+                st.title('Non-Wage Income Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="nwregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="nwurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="nwicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
 
 
             # Filters
@@ -3398,38 +3178,28 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
+                st.title('Food Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="fdregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="fdurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="fdicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
+            
             # Filters
             st.subheader("Data Tables")
             selected_vars = st.multiselect("Select variables to view", filtered_data.columns)
@@ -3583,39 +3353,28 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
+                st.title('Non-Food Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="nfregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="nfurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="nficode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
-
+            
             # Filters
             st.subheader("Data Tables")
             selected_vars = st.multiselect("Select variables to view", filtered_data.columns)
@@ -3709,37 +3468,27 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Dwelling Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="dwregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="dwurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="dwicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
+                   
 
 
             # Filters
@@ -3834,37 +3583,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Durables Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="drregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="drurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="dricode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
 
             # Filters
@@ -3960,40 +3698,28 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
+                st.title('Agriculture Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="agregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="agurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="agicode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
+            
 
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
-
-
-            # Filters
             st.subheader("Data Tables")
             selected_vars = st.multiselect("Select variables to view", filtered_data.columns)
             filtered_data = filtered_data.sort_values(by="date", ascending=True)
@@ -4085,37 +3811,26 @@ if check_password():
             #######################
             # Sidebar
             with st.sidebar:
-                st.title('Data Filter')
-
-                # Convert date columns to datetime if not already done
-                df0['start_date'] = pd.to_datetime(df0['start_date'], errors='coerce')
-                df0['end_date'] = pd.to_datetime(df0['end_date'], errors='coerce')
-
-                # Date filter (single date or range)
-
-                # Filter by icode, psu, region, urban
-
-
-                # Apply date filters
-                filtered_data = df0[
-                    (df0['start_date'] >= pd.to_datetime(start_date_filter)) &
-                    (df0['end_date'] <= pd.to_datetime(end_date_filter))
-                ]
-
-                # Apply filters for other selections if any
-
-                if selected_icode:
-                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode)]
-                
-                if selected_psu:
-                    filtered_data = filtered_data[filtered_data['psu'].isin(selected_psu)]
-                
-                if selected_region:
-                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region)]
-                
-                if selected_urban:
-                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban)]
-                    
+                st.title('Perception Filter')
+            
+                # Filter by Region, Urban/Rural, and Enumerator
+                selected_region_e = st.multiselect("Filter by Region", df0['region'].unique(), key="prregion_filter")
+                selected_urban_e = st.multiselect("Filter by Urban/Rural", df0['urban'].unique(), key="prurban_filter")
+                selected_icode_e = st.multiselect("Filter by Enumerator", df0['icode'].unique(), key="pricode_filter")
+            
+                # Create a copy of the DataFrame to apply filters on
+                filtered_data = df0.copy()
+            
+                # Apply filters if selections are made
+                if selected_region_e:
+                    filtered_data = filtered_data[filtered_data['region'].isin(selected_region_e)]
+            
+                if selected_urban_e:
+                    filtered_data = filtered_data[filtered_data['urban'].isin(selected_urban_e)]
+            
+                if selected_icode_e:
+                    filtered_data = filtered_data[filtered_data['icode'].isin(selected_icode_e)]
+            
 
 
             # Filters
