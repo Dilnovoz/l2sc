@@ -3128,7 +3128,7 @@ if check_password():
             # df_reshaped = pd.read_csv('us-population-2010-2019-reshaped.csv')
             # Load the Stata file (replace with your file path)
             def load_data():
-                url = "https://www.dropbox.com/scl/fi/g3kasbxsoc0qwlx31tru9/food_arm.dta?rlkey=4mfa0qf1sw0tnfd49c2ggvvm4&st=5q8bia6u&dl=1"  # Replace with your actual link
+                url = "https://www.dropbox.com/scl/fi/g3kasbxsoc0qwlx31tru9/food_arm.dta?rlkey=4mfa0qf1sw0tnfd49c2ggvvm4&st=wx49kh0c&dl=1"  # Replace with your actual link
                 try:
          # Step 1: Download the .dta file
                     response = requests.get(url)
